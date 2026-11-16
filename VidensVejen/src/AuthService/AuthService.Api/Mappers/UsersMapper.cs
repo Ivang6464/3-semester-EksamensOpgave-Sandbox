@@ -35,7 +35,7 @@ internal static class UsersMapper
     {
         var output = new UpdateAuthUserPermissionsCommand(
             id,
-            request.Permissions
+            request.PermissionsIds
             );
 
         return output;
