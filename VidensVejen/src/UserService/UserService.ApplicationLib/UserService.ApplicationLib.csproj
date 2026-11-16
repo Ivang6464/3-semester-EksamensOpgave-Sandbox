@@ -1,6 +1,11 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <ItemGroup>
+    <PackageReference Include="Microsoft.Extensions.DependencyInjection.Abstractions" Version="10.0.15" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\Shared\VidensVejen.BuildingBlocksLib\VidensVejen.BuildingBlocksLib.csproj" />
     <ProjectReference Include="..\UserService.DomainLib\UserService.DomainLib.csproj" />
     <ProjectReference Include="..\UserService.FacadeLib\UserService.FacadeLib.csproj" />
     <ProjectReference Include="..\..\Shared\VidensVejen.SharedKernelLib\VidensVejen.SharedKernelLib.csproj" />
