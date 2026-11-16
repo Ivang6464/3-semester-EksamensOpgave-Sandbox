@@ -9,7 +9,7 @@ namespace VidensVejen.ContractsLib.Requests.ExhibitionService;
 /// <param name="Body"></param>
 /// <param name="CalloutLabel"></param>
 /// <param name="CalloutText"></param>
-/// <param name="Qoute"></param>
+/// <param name="Quote"></param>
 /// <param name="ImageKey"></param>
 public record UpdateTopicRequest(
     Guid Id,
@@ -18,7 +18,7 @@ public record UpdateTopicRequest(
     string Body,
     string CalloutLabel,
     string CalloutText,
-    string Qoute,
+    string Quote,
     string ImageKey
     )
 {
@@ -55,7 +55,7 @@ public record UpdateTopicRequest(
     /// <summary>
     /// The qoute of the mascot
     /// </summary>
-    public string Qoute { get; init; } = Qoute;
+    public string Qoute { get; init; } = Quote;
 
     /// <summary>
     /// Mathces the key of an image uploaded in the same request
