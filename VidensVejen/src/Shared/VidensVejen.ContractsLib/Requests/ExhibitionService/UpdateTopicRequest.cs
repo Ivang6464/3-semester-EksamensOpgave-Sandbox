@@ -53,7 +53,7 @@ public record UpdateTopicRequest(
     public string CalloutText { get; init; } = CalloutText;
 
     /// <summary>
-    /// The qoute of the mascot
+    /// The quote of the mascot
     /// </summary>
     public string Qoute { get; init; } = Quote;
 
