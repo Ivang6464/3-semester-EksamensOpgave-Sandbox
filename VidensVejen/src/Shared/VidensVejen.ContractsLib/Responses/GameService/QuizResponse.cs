@@ -39,4 +39,30 @@ public record QuizResponse(
     string QuizLayout,
     string ImageUrl,
     List<QuestionResponse> Questions
-    );
+    )
+{
+    /// <summary>
+    /// A unique identifier for the quiz.
+    /// </summary>
+    public Guid Id { get; init; } = Id;
+
+    /// <summary>
+    /// The title of the quiz.
+    /// </summary>
+    public string Title { get; init; } = Title;
+
+    /// <summary>
+    /// A unique identifier for a exhibition the quiz associate to.
+    /// </summary>
+    public Guid ExhibitionId { get; init; } = ExhibitionId;
+
+    /// <summary>
+    /// The layout of the quiz.
+    /// </summary>
+    public string QuizLayout { get; init; } = QuizLayout;
+
+    /// <summary>
+    /// A list of the questions assoicated to the quiz.
+    /// </summary>
+    public List<QuestionResponse> Questions { get; init; } = Questions;
+}

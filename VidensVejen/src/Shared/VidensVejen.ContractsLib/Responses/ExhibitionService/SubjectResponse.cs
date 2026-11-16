@@ -14,4 +14,30 @@ public record SubjectResponse(
     string Title,
     string Description,
     IReadOnlyList<TopicResponse> Topics
-    );
+    )
+{
+    /// <summary>
+    /// A unique identifier for the subject.
+    /// </summary>
+    public Guid Id { get; init; } = Id;
+
+    /// <summary>
+    /// The slug of the subject.
+    /// </summary>
+    public string Slug { get; init; } = Slug;
+
+    /// <summary>
+    /// The title of the subject.
+    /// </summary>
+    public string Title { get; init; } = Title;
+
+    /// <summary>
+    /// The description of the subject.
+    /// </summary>
+    public string Description { get; init; } = Description;
+
+    /// <summary>
+    /// A list of topics the subject has associated.
+    /// </summary>
+    public IReadOnlyList<TopicResponse> Topics { get; init; } = Topics;
+}

@@ -12,4 +12,25 @@ public record ChoiceResponse(
     string Text,
     bool CorrectAnswer,
     string ImageUrl
-    );
+    )
+{
+    /// <summary>
+    /// A unique identifier for the choice.
+    /// </summary>
+    public Guid Id { get; init; } = Id;
+
+    /// <summary>
+    /// The text you want the choice to have.
+    /// </summary>
+    public string Text { get; init; } = Text;
+
+    /// <summary>
+    /// Marks the choice as correct
+    /// </summary>
+    public bool CorrectAnswer { get; init; } = CorrectAnswer;
+
+    /// <summary>
+    /// The url of the image assoicated to the choice
+    /// </summary>
+    public string ImageUrl { get; init; } = ImageUrl;
+}

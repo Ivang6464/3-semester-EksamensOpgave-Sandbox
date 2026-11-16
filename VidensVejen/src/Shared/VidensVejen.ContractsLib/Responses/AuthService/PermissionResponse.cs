@@ -14,4 +14,15 @@ namespace VidensVejen.ContractsLib.Responses.AuthService;
 public record PermissionResponse(
     Guid Id,
     string Name
-    );
+    )
+{
+    /// <summary>
+    /// A unique identifier for the permission.
+    /// </summary>
+    public Guid Id { get; init; } = Id;
+
+    /// <summary>
+    /// The name of the permission.
+    /// </summary>
+    public string Name { get; init; } = Name;
+}

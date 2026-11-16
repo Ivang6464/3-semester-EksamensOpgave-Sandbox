@@ -11,4 +11,10 @@ namespace VidensVejen.ContractsLib.Responses.ImageService;
 /// </example>
 public record ImageUrlResponse(
     string Url
-    );
+    )
+{
+    /// <summary>
+    /// The url of the image.
+    /// </summary>
+    public string Url { get; init; } = Url;
+}

@@ -4,7 +4,7 @@ namespace VidensVejen.ContractsLib.Responses.UserService;
 /// 
 /// </summary>
 /// <param name="Id"></param>
-/// <param name="FirstName"></param>
+/// <param name="Firstname"></param>
 /// <param name="Surname"></param>
 /// <param name="Email"></param>
 /// <example>
@@ -17,7 +17,28 @@ namespace VidensVejen.ContractsLib.Responses.UserService;
 /// </example>
 public record UserResponse(
     Guid Id,
-    string FirstName,
+    string Firstname,
     string Surname,
     string Email
-    );
+    )
+{
+    /// <summary>
+    /// A unique identifier for the user.
+    /// </summary>
+    public Guid Id { get; init; } = Id;
+
+    /// <summary>
+    /// The firstname of the user.
+    /// </summary>
+    public string Firstname { get; init; } = Firstname;
+
+    /// <summary>
+    /// The surname of the user.
+    /// </summary>
+    public string Surname { get; init; } = Surname;
+
+    /// <summary>
+    /// The email of the user.
+    /// </summary>
+    public string Email { get; init; } = Email;
+}

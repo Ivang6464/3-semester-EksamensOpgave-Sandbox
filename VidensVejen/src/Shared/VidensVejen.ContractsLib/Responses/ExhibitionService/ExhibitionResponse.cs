@@ -38,4 +38,25 @@ public record ExhibitionResponse(
     string Title,
     string ThemeUrl,
     IReadOnlyList<SubjectResponse> Subjects
-    );
+    )
+{
+    /// <summary>
+    /// A unique identifier for the exhibition.
+    /// </summary>
+    public Guid Id { get; init; } = Id;
+
+    /// <summary>
+    /// The title of the exhibition.
+    /// </summary>
+    public string Title { get; init; } = Title;
+
+    /// <summary>
+    /// The url of the theme.
+    /// </summary>
+    public string ThemeUrl { get; init; } = ThemeUrl;
+
+    /// <summary>
+    /// A list of subjects the exhibition has associated.
+    /// </summary>
+    public IReadOnlyList<SubjectResponse> Subjects { get; init; } = Subjects;
+}

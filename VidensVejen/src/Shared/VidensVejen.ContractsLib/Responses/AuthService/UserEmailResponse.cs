@@ -9,4 +9,10 @@ namespace VidensVejen.ContractsLib.Responses.AuthService;
 ///     "email": "SueStorm@FantasticFour.test"
 /// }
 /// </example>
-public record UserEmailResponse(string Email);
+public record UserEmailResponse(string Email)
+{
+    /// <summary>
+    /// The email of the user.
+    /// </summary>
+    public string Email { get; init; } = Email;
+}

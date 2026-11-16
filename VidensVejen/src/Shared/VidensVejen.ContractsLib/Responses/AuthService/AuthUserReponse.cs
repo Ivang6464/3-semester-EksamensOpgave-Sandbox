@@ -26,4 +26,20 @@ public record AuthUserReponse(
     Guid Id,
     string Email,
     IReadOnlyList<PermissionResponse> Permissions
-    );
+    )
+{
+    /// <summary>
+    /// A unique identifier for the auth user.
+    /// </summary>
+    public Guid Id { get; init; } = Id;
+
+    /// <summary>
+    /// The email of the user.
+    /// </summary>
+    public string Email { get; init; } = Email;
+
+    /// <summary>
+    /// A list of the permissions the user has.
+    /// </summary>
+    public IReadOnlyList<PermissionResponse> Permissions { get; init; } = Permissions;
+}
