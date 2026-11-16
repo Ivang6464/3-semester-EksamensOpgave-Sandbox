@@ -14,4 +14,15 @@ namespace VidensVejen.ContractsLib.Requests.AuthService;
 public record LoginUserRequest(
     string Email,
     string Password
-    );
+    )
+{
+    /// <summary>
+    /// The email of the user.
+    /// </summary>
+    public string Email { get; init; } = Email;
+
+    /// <summary>
+    /// The password of the user.
+    /// </summary>
+    public string Password { get; init; } = Password;
+}

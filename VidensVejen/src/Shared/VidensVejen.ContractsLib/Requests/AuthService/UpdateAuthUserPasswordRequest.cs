@@ -10,4 +10,10 @@ namespace VidensVejen.ContractsLib.Requests.AuthService;
 ///     "password":"MySecretPassword123"
 /// }
 /// </example>
-public record UpdateAuthUserPasswordRequest(string Password);
+public record UpdateAuthUserPasswordRequest(string Password)
+{
+    /// <summary>
+    /// The password of the user.
+    /// </summary>
+    public string Password { get; init; } = Password;
+};

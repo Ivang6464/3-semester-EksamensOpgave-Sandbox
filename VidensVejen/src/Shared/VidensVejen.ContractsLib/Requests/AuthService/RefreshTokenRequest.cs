@@ -14,4 +14,15 @@ namespace VidensVejen.ContractsLib.Requests.AuthService;
 public record RefreshTokenRequest(
     string AccessToken,
     string RefreshToken
-    );
+    )
+{
+    /// <summary>
+    /// The access token of the user
+    /// </summary>
+    public string AccessToken { get; init; } = AccessToken;
+
+    /// <summary>
+    /// The refresh token of the user
+    /// </summary>
+    public string RefreshToken { get; init; } = RefreshToken;
+}

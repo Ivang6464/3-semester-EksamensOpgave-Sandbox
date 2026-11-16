@@ -23,4 +23,30 @@ public record RegisterUserRequest(
     string Email,
     string Password,
     List<Guid> PermissionsIds
-    );
+    )
+{
+    /// <summary>
+    /// The firstname of the user.
+    /// </summary>
+    public string Firstname { get; init; } = Firstname;
+
+    /// <summary>
+    /// The surname of the user.
+    /// </summary>
+    public string Surname { get; init; } = Surname;
+
+    /// <summary>
+    /// The email of the user.
+    /// </summary>
+    public string Email { get; init; } = Email;
+
+    /// <summary>
+    /// The password of the user.
+    /// </summary>
+    public string Password { get; init; } = Password;
+
+    /// <summary>
+    /// List of guids required to find correct permission.
+    /// </summary>
+    public List<Guid> PermissionIds { get; init; } = PermissionsIds;
+}

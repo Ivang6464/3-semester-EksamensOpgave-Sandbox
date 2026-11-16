@@ -30,4 +30,15 @@ namespace VidensVejen.ContractsLib.Requests.ExhibitionService;
 public record CreateExhibitionRequest(
     string ExhibitionName,
     List<CreateSubjectRequest> Subjects
-    );
+    )
+{
+    /// <summary>
+    /// The name of the exhibition.
+    /// </summary>
+    public string ExhibitionName { get; init; } = ExhibitionName;
+
+    /// <summary>
+    /// List of the subjects objects you want exhibition to have
+    /// </summary>
+    public List<CreateSubjectRequest> Subjects { get; init; } = Subjects;
+}
