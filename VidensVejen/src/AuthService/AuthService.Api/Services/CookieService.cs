@@ -1,0 +1,32 @@
+using AuthService.FacadeLib.Commands.DTOs;
+
+namespace AuthService.Api.Services;
+
+/// <summary>
+/// 
+/// </summary>
+public class CookieService : ICookieService
+{
+    void ICookieService.SetTokenInsideCookie(TokenDto token, HttpContext context)
+    {
+        context.Response.Cookies.Append("accessToken", token.AccessToken,
+           new CookieOptions
+           {
+               Expires = DateTimeOffset.UtcNow.AddMinutes(60),
+               HttpOnly = true,
+               IsEssential = true,
+               Secure = true,
+               SameSite = SameSiteMode.None
+           });
+
+        context.Response.Cookies.Append("refreshToken", token.RefreshToken,
+            new CookieOptions
+            {
+                Expires = DateTimeOffset.UtcNow.AddDays(7),
+                HttpOnly = true,
+                IsEssential = true,
+                Secure = true,
+                SameSite = SameSiteMode.None
+            });
+    }
+}
