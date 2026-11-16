@@ -15,7 +15,7 @@ using VidensVejen.BuildingBlocksLib.UnitOfWork;
 using VidensVejen.ContractsLib.Events;
 using VidensVejen.SharedKernelLib.Exceptions;
 
-namespace AuthService.ApplicationLib.Tests;
+namespace AuthService.ApplicationLib.Tests.Users;
 
 public class RegisterUserTests
 {

@@ -7,7 +7,7 @@ using AuthService.FacadeLib.Commands.DTOs;
 using AuthService.FacadeLib.Commands.Interfaces;
 using Moq;
 
-namespace AuthService.ApplicationLib.Tests;
+namespace AuthService.ApplicationLib.Tests.Authentication;
 
 public class LoginUserTests
 {
