@@ -1,4 +1,4 @@
-using Scalar.AspNetCore;
+using VidensVejen.BuildingBlocksLib.DependencyInjection;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -7,8 +7,11 @@ builder.AddServiceDefaults();
 // Add services to the container.
 
 builder.Services.AddControllers();
-// Learn more about configuring OpenAPI at https://aka.ms/aspnet/openapi
-builder.Services.AddOpenApi();
+
+var serviceName = builder.Environment.ApplicationName[..^4];
+
+builder.Services.AddOpenApi(options =>
+    options.WithCustomApiInfo(serviceName));
 
 var app = builder.Build();
 
@@ -18,7 +21,7 @@ app.MapDefaultEndpoints();
 if (app.Environment.IsDevelopment())
 {
     app.MapOpenApi();
-    app.MapScalarApiReference();
+    app.AddCustomScalar(serviceName);
 }
 
 app.UseHttpsRedirection();
