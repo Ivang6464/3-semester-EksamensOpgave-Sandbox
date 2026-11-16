@@ -1,3 +1,5 @@
+using System.ComponentModel;
+using System.ComponentModel.DataAnnotations;
 using System.Text.Json;
 using Dapr;
 using Microsoft.AspNetCore.Mvc;
@@ -14,7 +16,13 @@ public class UserEventsController(
 {
     [Topic("pubsub", "user-registered")]
     [HttpPost("events/user-registered")]
-    public async Task<ActionResult> RecieveAsync(UserRegisteredIntegrationEvent integrationEvent, CancellationToken cancellationToken)
+    [EndpointSummary("Create a user")]
+    [EndpointDescription("Creates a new instance of a user")]
+    [ProducesResponseType(StatusCodes.Status200OK, Description = "User created successfully")]
+    public async Task<ActionResult> CreateUserAsync(
+        [Required][Description("Object used to create a user")] UserRegisteredIntegrationEvent integrationEvent,
+        CancellationToken cancellationToken
+        )
     {
 
         var message = new InboxMessage
