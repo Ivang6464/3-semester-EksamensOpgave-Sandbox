@@ -11,4 +11,10 @@ namespace VidensVejen.ContractsLib.Requests.ImageService;
 /// </example>
 public record UploadImageRequest(
     string FileName
-    );
+    )
+{
+    /// <summary>
+    /// The filename of the image.
+    /// </summary>
+    public string FileName { get; init; } = FileName;
+}

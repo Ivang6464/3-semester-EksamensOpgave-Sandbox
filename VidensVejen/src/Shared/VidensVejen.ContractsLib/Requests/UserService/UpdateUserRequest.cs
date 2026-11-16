@@ -14,4 +14,15 @@ namespace VidensVejen.ContractsLib.Requests.UserService;
 public record UpdateUserRequest(
     string Firstname,
     string Surname
-    );
+    )
+{
+    /// <summary>
+    /// The firstname of the user.
+    /// </summary>
+    public string Firstname { get; init; } = Firstname;
+
+    /// <summary>
+    /// The surname of the user.
+    /// </summary>
+    public string Surname { get; init; } = Surname;
+}

@@ -32,4 +32,15 @@ namespace VidensVejen.ContractsLib.Requests.ExhibitionService;
 public record UpdateExhibitionRequest(
     string ExhibitionName,
     List<UpdateSubjectRequest> Subjects
-    );
+    )
+{
+    /// <summary>
+    /// The name of the exhibition.
+    /// </summary>
+    public string ExhibitionName { get; init; } = ExhibitionName;
+
+    /// <summary>
+    /// A list of the subjects taht you want to update.
+    /// </summary>
+    public List<UpdateSubjectRequest> Subjects { get; init; } = Subjects;
+}

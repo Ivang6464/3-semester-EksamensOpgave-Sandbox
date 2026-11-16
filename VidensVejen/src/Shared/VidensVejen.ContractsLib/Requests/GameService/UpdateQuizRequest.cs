@@ -34,4 +34,25 @@ public record UpdateQuizRequest(
     Guid ExhibitionId,
     string QuizLayout,
     List<UpdateQuestionRequest> Questions
-    );
+    )
+{
+    /// <summary>
+    /// The title of the quiz.
+    /// </summary>
+    public string Title { get; init; } = Title;
+
+    /// <summary>
+    /// A unique identifier for a exhibition the quiz associate to.
+    /// </summary>
+    public Guid ExhibitionId { get; init; } = ExhibitionId;
+
+    /// <summary>
+    /// The layout of the quiz.
+    /// </summary>
+    public string QuizLayout { get; init; } = QuizLayout;
+
+    /// <summary>
+    /// A list of the questions you want the quiz to have.
+    /// </summary>
+    public List<UpdateQuestionRequest> Questions { get; init; } = Questions;
+}
