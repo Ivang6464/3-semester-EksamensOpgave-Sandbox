@@ -12,7 +12,7 @@ public class CookieService : ICookieService
         context.Response.Cookies.Append("accessToken", token.AccessToken,
            new CookieOptions
            {
-               Expires = DateTimeOffset.UtcNow.AddMinutes(60),
+               Expires = DateTimeOffset.UtcNow.AddDays(1),
                HttpOnly = true,
                IsEssential = true,
                Secure = true,
