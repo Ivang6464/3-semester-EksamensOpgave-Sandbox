@@ -108,6 +108,7 @@ public class RegisterUserTests
 
         var expectedEvent = new UserRegisteredIntegrationEvent(
             outboxMessage.Id,
+            "user-registered",
             registeredUser.Id.Value,
             command.Firstname,
             command.Surname,
