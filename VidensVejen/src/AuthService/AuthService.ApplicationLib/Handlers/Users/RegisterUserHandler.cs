@@ -71,6 +71,7 @@ public class RegisterUserHandler(
 
             var integrationEvent = new UserRegisteredIntegrationEvent(
                 Guid.NewGuid(),
+                "user-registered",
                 authUser.Id.Value,
                 command.Firstname,
                 command.Surname,
@@ -81,7 +82,7 @@ public class RegisterUserHandler(
             {
                 Id = integrationEvent.EventId,
                 Type = integrationEvent.GetType().FullName!,
-                Topic = "user-registered",
+                Topic = integrationEvent.EventTopic,
                 Content = JsonSerializer.Serialize(integrationEvent),
                 CreatedAtUtc = DateTime.UtcNow
             };
