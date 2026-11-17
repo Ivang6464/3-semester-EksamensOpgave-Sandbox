@@ -1,7 +1,7 @@
 using System.Data;
 using System.Text.Json;
 using Moq;
-using UserService.ApplicationLib.Messaging.Inbox;
+using UserService.ApplicationLib.Messaging.Inbox.Handlers;
 using UserService.ApplicationLib.Repositories;
 using UserService.DomainLib.Entities;
 using UserService.DomainLib.ValueObjects;
@@ -43,7 +43,7 @@ public class ProcessCreateUserInboxMessageHandlerTests
         var cancellationToken = TestContext.Current.CancellationToken;
         var userId = Guid.NewGuid();
         var integrationEvent = new UserRegisteredIntegrationEvent(
-            eventId, userId, "Sue", "Storm", "sue@example.com");
+            eventId, "user-registered", userId, "Sue", "Storm", "sue@example.com");
         var message = CreateMessage(integrationEvent);
         User? savedUser = null;
         OutboxMessage? queuedMessage = null;
@@ -55,7 +55,7 @@ public class ProcessCreateUserInboxMessageHandlerTests
 
         mockInbox.Setup(r => r.FindAsync(eventId, cancellationToken))
             .ReturnsAsync(message);
-        var handler = new ProcessCreateUserInboxMessageHandler(
+        var handler = new ProcessInboxMessageHandler(
             mockInbox.Object, mockUserRepo.Object, mockOutbox.Object, mockUnitOfWork.Object);
 
         // Act
@@ -134,7 +134,7 @@ public class ProcessCreateUserInboxMessageHandlerTests
 
         mockInbox.Setup(r => r.FindAsync(eventId, cancellationToken))
             .ReturnsAsync(message);
-        var handler = new ProcessCreateUserInboxMessageHandler(
+        var handler = new ProcessInboxMessageHandler(
             mockInbox.Object, mockUserRepo.Object, mockOutbox.Object, mockUnitOfWork.Object);
 
         // Act
@@ -165,7 +165,7 @@ public class ProcessCreateUserInboxMessageHandlerTests
 
         mockInbox.Setup(r => r.FindAsync(eventId, cancellationToken))
             .ReturnsAsync(message);
-        var handler = new ProcessCreateUserInboxMessageHandler(
+        var handler = new ProcessInboxMessageHandler(
             mockInbox.Object, mockUserRepo.Object, mockOutbox.Object, mockUnitOfWork.Object);
 
         // Act & Assert
