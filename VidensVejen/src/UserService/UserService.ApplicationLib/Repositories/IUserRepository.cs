@@ -20,4 +20,6 @@ public interface IUserRepository
     /// <param name="user"></param>
     /// <returns></returns>
     Task AddAsync(User user);
+    Task<object?> GetUserByIdAsync(UserId userId);
+    void Delete(object user);
 }
