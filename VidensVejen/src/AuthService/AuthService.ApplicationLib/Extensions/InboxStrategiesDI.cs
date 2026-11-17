@@ -1,5 +1,6 @@
 using AuthService.ApplicationLib.Messaging.Inbox.Strategies;
 using Microsoft.Extensions.DependencyInjection;
+using VidensVejen.BuildingBlocksLib.Messaging.Inbox;
 
 namespace AuthService.ApplicationLib.Extensions;
 

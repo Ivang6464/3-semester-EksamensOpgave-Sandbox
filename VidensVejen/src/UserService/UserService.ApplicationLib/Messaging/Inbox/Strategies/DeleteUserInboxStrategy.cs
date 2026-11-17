@@ -1,6 +1,7 @@
 using System.Text.Json;
 using UserService.ApplicationLib.Repositories;
 using UserService.DomainLib.Entities;
+using VidensVejen.BuildingBlocksLib.Messaging.Inbox;
 using VidensVejen.BuildingBlocksLib.Messaging.Outbox;
 using VidensVejen.ContractsLib.Events;
 using VidensVejen.SharedKernelLib.Exceptions;

@@ -1,5 +1,6 @@
 using Microsoft.Extensions.DependencyInjection;
 using UserService.ApplicationLib.Messaging.Inbox.Strategies;
+using VidensVejen.BuildingBlocksLib.Messaging.Inbox;
 
 namespace UserService.ApplicationLib.Extensions;
 

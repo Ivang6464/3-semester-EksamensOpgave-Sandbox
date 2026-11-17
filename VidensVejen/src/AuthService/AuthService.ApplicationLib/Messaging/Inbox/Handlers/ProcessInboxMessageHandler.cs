@@ -1,5 +1,4 @@
 using System.Data;
-using AuthService.ApplicationLib.Messaging.Inbox.Strategies;
 using VidensVejen.BuildingBlocksLib.Messaging.Inbox;
 using VidensVejen.BuildingBlocksLib.Messaging.Outbox;
 using VidensVejen.BuildingBlocksLib.UnitOfWork;

@@ -1,6 +1,6 @@
 using VidensVejen.BuildingBlocksLib.Messaging.Outbox;
 
-namespace AuthService.ApplicationLib.Messaging.Inbox.Strategies;
+namespace VidensVejen.BuildingBlocksLib.Messaging.Inbox;
 
 /// <summary>
 /// 
