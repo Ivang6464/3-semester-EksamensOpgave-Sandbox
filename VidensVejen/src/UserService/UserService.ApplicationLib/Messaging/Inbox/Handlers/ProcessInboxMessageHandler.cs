@@ -1,28 +1,33 @@
 using System.Data;
-using System.Text.Json;
-using UserService.ApplicationLib.Repositories;
-using UserService.DomainLib.Entities;
+using UserService.ApplicationLib.Messaging.Inbox.Strategies;
 using VidensVejen.BuildingBlocksLib.Messaging.Inbox;
 using VidensVejen.BuildingBlocksLib.Messaging.Outbox;
 using VidensVejen.BuildingBlocksLib.UnitOfWork;
-using VidensVejen.ContractsLib.Events;
 
 namespace UserService.ApplicationLib.Messaging.Inbox.Handlers;
 
 /// <summary>
 /// 
 /// </summary>
+
 /// <param name="inbox"></param>
-/// <param name="userRepo"></param>
 /// <param name="outbox"></param>
 /// <param name="unitOfWork"></param>
+/// /// <param name="strategies"></param>
 public class ProcessInboxMessageHandler(
     IInboxRepository inbox,
-    IUserRepository userRepo,
     IOutboxRepository outbox,
-    IUnitOfWork unitOfWork
+    IUnitOfWork unitOfWork,
+    IEnumerable<IInboxMessageStrategy> strategies
     )
 {
+
+    private readonly Dictionary<string, IInboxMessageStrategy> _strategiesByEventType =
+        strategies.ToDictionary(
+            strategy => strategy.EventType,
+            StringComparer.Ordinal
+            );
+
     /// <summary>
     /// 
     /// </summary>
@@ -47,32 +52,19 @@ public class ProcessInboxMessageHandler(
                 return;
             }
 
-            var integrationEvent = JsonSerializer.Deserialize<UserRegisteredIntegrationEvent>(message.Content)
-                ?? throw new InvalidOperationException($"Inbox event {eventId} is missing a event");
+            if (_strategiesByEventType.TryGetValue(message.Type, out var strategy) == false)
+            {
+                throw new InvalidOperationException($"No inbox-strategy for the type '{message.Type}' on event '{eventId}'.");
+            }
 
-            var userId = new UserId(integrationEvent.UserId);
+            var outboxMessage = await strategy.ApplyAsync(message.Id, message.Content, cancellationToken);
 
-            var user = User.Create(userId, integrationEvent.Firstname, integrationEvent.Surname, integrationEvent.Email);
-
-            await userRepo.AddAsync(user);
 
             message.SetProccesedAtUtc();
 
-            var userCreatedIntegrationEvent = new UserActivateIntegrationEvent(
-                message.Id,
-                user.Id.Value
-                );
 
-            var outboxMessage = new OutboxMessage
-            {
-                Id = userCreatedIntegrationEvent.EventId,
-                Type = userCreatedIntegrationEvent.GetType().FullName!,
-                Topic = "user-activate",
-                Content = JsonSerializer.Serialize(userCreatedIntegrationEvent),
-                CreatedAtUtc = DateTime.UtcNow
-            };
-
-            await outbox.AddAsync(outboxMessage);
+            if (outboxMessage != null)
+                await outbox.AddAsync(outboxMessage);
 
             await unitOfWork.SaveChangesAsync();
             unitOfWork.Commit();
