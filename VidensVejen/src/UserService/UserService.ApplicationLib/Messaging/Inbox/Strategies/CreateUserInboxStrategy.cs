@@ -35,7 +35,7 @@ public class CreateUserInboxStrategy(IUserRepository userRepo) : IInboxMessageSt
         {
             Id = userCreatedIntegrationEvent.EventId,
             Type = userCreatedIntegrationEvent.GetType().FullName!,
-            Topic = integrationEvent.EventTopic,
+            Topic = userCreatedIntegrationEvent.EventTopic,
             Content = JsonSerializer.Serialize(userCreatedIntegrationEvent),
             CreatedAtUtc = DateTime.UtcNow
         };
