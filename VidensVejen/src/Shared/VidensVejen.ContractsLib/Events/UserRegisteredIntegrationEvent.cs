@@ -4,6 +4,7 @@ namespace VidensVejen.ContractsLib.Events;
 /// 
 /// </summary>
 /// <param name="EventId"></param>
+/// <param name="EventTopic"></param>
 /// <param name="UserId"></param>
 /// <param name="Firstname"></param>
 /// <param name="Surname"></param>
@@ -11,6 +12,7 @@ namespace VidensVejen.ContractsLib.Events;
 /// <example>
 /// {
 ///     "eventId": "5724e1de-00ce-4b6a-9d99-e820fbd5cc9d",
+///     "eventTopic": "User-Registered",
 ///     "userId": "5724e1de-00ce-4b6a-9d99-e820fbd5cc9d",
 ///     "firstname": "Sue",
 ///     "surname": "Storm",
@@ -19,6 +21,7 @@ namespace VidensVejen.ContractsLib.Events;
 /// </example>
 public record UserRegisteredIntegrationEvent(
     Guid EventId,
+    string EventTopic,
     Guid UserId,
     string Firstname,
     string Surname,
@@ -34,6 +37,11 @@ public record UserRegisteredIntegrationEvent(
     /// A unique identifier for the user.
     /// </summary>
     public Guid UserId { get; init; } = UserId;
+
+    /// <summary>
+    /// The topic of the event
+    /// </summary>
+    public string EventTopic { get; init; } = EventTopic;
 
     /// <summary>
     /// The firstname of the user.
