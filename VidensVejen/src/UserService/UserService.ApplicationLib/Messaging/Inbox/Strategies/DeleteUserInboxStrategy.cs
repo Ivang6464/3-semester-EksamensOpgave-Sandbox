@@ -17,7 +17,7 @@ public class DeleteUserInboxStrategy(IUserRepository userRepo) : IInboxMessageSt
 
     async Task<OutboxMessage?> IInboxMessageStrategy.ApplyAsync(Guid eventId, string content, CancellationToken cancellationToken)
     {
-        var integrationEvent = JsonSerializer.Deserialize<UserRegisteredIntegrationEvent>(content)
+        var integrationEvent = JsonSerializer.Deserialize<UserDeletionIntegrationEvent>(content)
                 ?? throw new InvalidOperationException($"Inbox event {eventId} is missing a event");
 
         var userId = new UserId(integrationEvent.UserId);
