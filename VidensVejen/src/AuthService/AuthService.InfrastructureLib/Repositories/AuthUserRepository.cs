@@ -12,6 +12,11 @@ namespace AuthService.InfrastructureLib.Repositories;
 /// <param name="db"></param>
 public class AuthUserRepository(AuthUserDbContext db) : IAuthUserRepository
 {
+    void IAuthUserRepository.Delete(AuthUser authUser)
+    {
+        db.AuthUsers.Remove(authUser);
+    }
+
     async Task<bool> IAuthUserRepository.EmailExistAsync(Email email)
     {
         return await db.AuthUsers.AnyAsync(e => e.Email == email);
