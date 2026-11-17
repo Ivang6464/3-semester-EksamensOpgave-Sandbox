@@ -39,5 +39,10 @@ public interface IAuthUserRepository
     /// </summary>
     /// <returns></returns>
     Task SaveAsync();
+
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <param name="authUser"></param>
     void Delete(AuthUser authUser);
 }
