@@ -15,7 +15,6 @@ namespace UserService.Api.Controllers;
 public class UsersController(
     IUpdateUserHandler updateUser,
     IUpdateEmailHandler updateEmail,
-    IDeleteUserHandler delete,
     IUserQueries queries
 
     ) : ControllerBase
@@ -112,32 +111,6 @@ public class UsersController(
             await updateEmail.HandleAsync(request.AsUpdateEmailCommand(id));
 
             return Ok();
-        }
-        catch (NotFoundException ex)
-        {
-            return NotFound(ex.Message);
-        }
-        catch (Exception ex)
-        {
-            return BadRequest(ex.Message);
-        }
-    }
-
-
-    [HttpDelete("{id:guid}")]
-    [EndpointSummary("Deletes a user")]
-    [EndpointDescription("Deletes a single instance of a user")]
-    [ProducesResponseType(StatusCodes.Status204NoContent, Description = "User was deleted successfully")]
-    [ProducesResponseType(StatusCodes.Status400BadRequest, Description = "Error while trying to update the requested user")]
-    [ProducesResponseType(StatusCodes.Status404NotFound, Description = "User was not found")]
-    public async Task<ActionResult> DeleteUser(
-        [Required][Description("A unique identifier for a user")] Guid id)
-    {
-        try
-        {
-            await delete.HandleAsync(id);
-
-            return NoContent();
         }
         catch (NotFoundException ex)
         {
