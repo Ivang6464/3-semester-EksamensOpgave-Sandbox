@@ -1,5 +1,5 @@
 using AuthService.ApplicationLib.Handlers.Users;
-using AuthService.ApplicationLib.Messaging.Inbox;
+using AuthService.ApplicationLib.Messaging.Inbox.Handlers;
 using AuthService.ApplicationLib.Messaging.Outbox;
 using AuthService.FacadeLib.Commands.Interfaces;
 using Microsoft.Extensions.DependencyInjection;

@@ -1,26 +1,32 @@
 using System.Data;
-using System.Text.Json;
-using AuthService.ApplicationLib.Repositories;
-using AuthService.DomainLib.Entities;
+using AuthService.ApplicationLib.Messaging.Inbox.Strategies;
 using VidensVejen.BuildingBlocksLib.Messaging.Inbox;
+using VidensVejen.BuildingBlocksLib.Messaging.Outbox;
 using VidensVejen.BuildingBlocksLib.UnitOfWork;
-using VidensVejen.ContractsLib.Events;
 using VidensVejen.SharedKernelLib.Exceptions;
 
-namespace AuthService.ApplicationLib.Messaging.Inbox;
+namespace AuthService.ApplicationLib.Messaging.Inbox.Handlers;
 
 /// <summary>
 /// 
 /// </summary>
 /// <param name="inbox"></param>
-/// <param name="authUserRepo"></param>
+/// <param name="outbox"></param>
 /// <param name="unitOfWork"></param>
+/// <param name="strategies"></param>
 public class ProcessInboxMessageHandler(
     IInboxRepository inbox,
-    IAuthUserRepository authUserRepo,
-    IUnitOfWork unitOfWork
+    IOutboxRepository outbox,
+    IUnitOfWork unitOfWork,
+    IEnumerable<IInboxMessageStrategy> strategies
     )
 {
+
+    private readonly Dictionary<string, IInboxMessageStrategy> _strategiesByEventType =
+        strategies.ToDictionary(
+            strategy => strategy.EventType,
+            StringComparer.Ordinal
+            );
 
     /// <summary>
     /// 
@@ -47,20 +53,22 @@ public class ProcessInboxMessageHandler(
                 return;
             }
 
-            var integrationEvent = JsonSerializer.Deserialize<UserActivateIntegrationEvent>(message.Content)
-                ?? throw new InvalidOperationException($"Inbox event {eventId} is missing a event");
+            if (_strategiesByEventType.TryGetValue(message.Type, out var strategy) == false)
+            {
+                throw new InvalidOperationException($"No inbox-strategy for the type '{message.Type}' on event '{eventId}'.");
+            }
 
-            var authUserId = new AuthUserId(integrationEvent.UserId);
+            var outboxMessage = await strategy.ApplyAsync(message.Id, message.Content, cancellationToken);
 
-            var user = await authUserRepo.GetAuthUserByIdAsync(authUserId)
-                ?? throw new NotFoundException("Could not process, User was not found");
-
-            user.SetStatusActive();
 
             message.SetProccesedAtUtc();
 
+            if (outboxMessage != null)
+                await outbox.AddAsync(outboxMessage);
+
             await unitOfWork.SaveChangesAsync();
             unitOfWork.Commit();
+
         }
         catch (Exception)
         {

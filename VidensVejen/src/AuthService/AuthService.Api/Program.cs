@@ -14,6 +14,7 @@ builder.Services.AddQueriesDI();
 builder.Services.AddUnitOfWorkDI();
 builder.Services.AddServiceDI();
 builder.Services.AddBackgroundWorkersDI();
+builder.Services.AddInboxStrategiesDI();
 builder.Services.AddEventPublisherDI();
 
 builder.Services.AddControllers();

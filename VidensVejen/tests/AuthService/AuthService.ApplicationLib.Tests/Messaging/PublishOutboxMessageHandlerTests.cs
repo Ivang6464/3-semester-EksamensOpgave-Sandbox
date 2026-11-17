@@ -1,0 +1,79 @@
+using System.Text.Json;
+using AuthService.ApplicationLib.Messaging.Outbox;
+using Moq;
+using VidensVejen.BuildingBlocksLib.Messaging.Outbox;
+using VidensVejen.BuildingBlocksLib.Messaging.Publisher;
+using VidensVejen.BuildingBlocksLib.UnitOfWork;
+using VidensVejen.ContractsLib.Events;
+
+namespace AuthService.ApplicationLib.Tests.Messaging;
+
+public class PublishOutboxMessageHandlerTests
+{
+    private const string Topic = "user-registered";
+
+    private static OutboxMessage CreateMessage(UserRegisteredIntegrationEvent integrationEvent)
+    {
+        return new OutboxMessage
+        {
+            Id = integrationEvent.EventId,
+            Type = typeof(UserRegisteredIntegrationEvent).FullName!,
+            Topic = Topic,
+            Content = JsonSerializer.Serialize(integrationEvent),
+            CreatedAtUtc = DateTime.UtcNow
+        };
+    }
+
+    [Fact]
+    public async Task Handle_GivenPendingMessage_PublishesEventAndSavesTimestamp()
+    {
+        // Arrange
+        var token = TestContext.Current.CancellationToken;
+        var integrationEvent = new UserRegisteredIntegrationEvent(Guid.NewGuid(), Topic, Guid.NewGuid(), "Sue", "Storm", "sue@example.com");
+        var message = CreateMessage(integrationEvent);
+        var outbox = new Mock<IOutboxRepository>();
+        var unitOfWork = new Mock<IUnitOfWork>();
+        var publisher = new Mock<IOutboxEventPublisher>();
+        outbox.Setup(repository => repository.FindAsync(message.Id, token)).ReturnsAsync(message);
+        var handler = new PublishOutboxMessageHandler(outbox.Object, unitOfWork.Object, publisher.Object);
+
+        // Act
+        await handler.HandleAsync(message.Id, token);
+
+        // Assert
+        publisher.Verify(service => service.PublishAsync<object>(Topic, integrationEvent), Times.Once);
+        Assert.NotNull(message.PublishedAtUtc);
+        unitOfWork.Verify(work => work.SaveChangesAsync(), Times.Once);
+    }
+
+    [Theory]
+    [InlineData(false)]
+    [InlineData(true)]
+    public async Task Handle_GivenMissingOrPublishedMessage_SkipsPublishing(bool alreadyPublished)
+    {
+        // Arrange
+        var token = TestContext.Current.CancellationToken;
+        var eventId = Guid.NewGuid();
+        var outbox = new Mock<IOutboxRepository>();
+        var unitOfWork = new Mock<IUnitOfWork>();
+        var publisher = new Mock<IOutboxEventPublisher>();
+        OutboxMessage? message = null;
+        if (alreadyPublished)
+        {
+            var integrationEvent = new UserRegisteredIntegrationEvent(eventId, Topic, Guid.NewGuid(), "Sue", "Storm", "sue@example.com");
+            message = CreateMessage(integrationEvent);
+            message.SetPublishAtUtc();
+        }
+
+        outbox.Setup(repository => repository.FindAsync(eventId, token)).ReturnsAsync(message);
+        var handler = new PublishOutboxMessageHandler(outbox.Object, unitOfWork.Object, publisher.Object);
+
+        // Act
+        await handler.HandleAsync(eventId, token);
+
+        // Assert
+        outbox.Verify(repository => repository.FindAsync(eventId, token), Times.Once);
+        publisher.Verify(service => service.PublishAsync<object>(It.IsAny<string>(), It.IsAny<object>()), Times.Never);
+        unitOfWork.Verify(work => work.SaveChangesAsync(), Times.Never);
+    }
+}

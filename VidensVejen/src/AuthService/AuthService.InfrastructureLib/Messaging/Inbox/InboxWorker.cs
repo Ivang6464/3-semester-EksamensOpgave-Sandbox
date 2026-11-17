@@ -1,4 +1,4 @@
-using AuthService.ApplicationLib.Messaging.Inbox;
+using AuthService.ApplicationLib.Messaging.Inbox.Handlers;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
