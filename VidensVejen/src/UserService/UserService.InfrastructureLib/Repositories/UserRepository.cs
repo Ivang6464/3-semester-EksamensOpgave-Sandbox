@@ -16,6 +16,16 @@ public class UserRepository(UserDbContext db) : IUserRepository
         await db.Users.AddAsync(user);
     }
 
+    void IUserRepository.Delete(User user)
+    {
+        db.Users.Remove(user);
+    }
+
+    async Task<User?> IUserRepository.GetUserByIdAsync(UserId userId)
+    {
+        return await db.Users.FindAsync(userId);
+    }
+
     async Task<bool> IUserRepository.UserExistsAsync(UserId id)
     {
         return await db.Users.AnyAsync(u => u.Id == id);
