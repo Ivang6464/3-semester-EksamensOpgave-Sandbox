@@ -1,6 +1,6 @@
 using Microsoft.Extensions.DependencyInjection;
 using UserService.ApplicationLib.Handlers;
-using UserService.ApplicationLib.Messaging.Inbox;
+using UserService.ApplicationLib.Messaging.Inbox.Handlers;
 using UserService.ApplicationLib.Messaging.Outbox;
 using UserService.FacadeLib.Commands.Interfaces;
 
@@ -21,7 +21,7 @@ public static class HandlerDI
         services.AddScoped<IUpdateUserHandler, UpdateUserHandler>();
         services.AddScoped<IUpdateEmailHandler, UpdateEmailHandler>();
         services.AddScoped<IDeleteUserHandler, DeleteUserHandler>();
-        services.AddScoped<ProcessCreateUserInboxMessageHandler>();
+        services.AddScoped<ProcessInboxMessageHandler>();
         services.AddScoped<PublishOutboxMessageHandler>();
 
         return services;

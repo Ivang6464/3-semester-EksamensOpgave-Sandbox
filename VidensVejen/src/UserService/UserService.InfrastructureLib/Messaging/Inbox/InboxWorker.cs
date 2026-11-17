@@ -1,7 +1,7 @@
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
-using UserService.ApplicationLib.Messaging.Inbox;
+using UserService.ApplicationLib.Messaging.Inbox.Handlers;
 using VidensVejen.BuildingBlocksLib.Messaging.Inbox;
 
 namespace UserService.InfrastructureLib.Messaging.Inbox;
@@ -48,7 +48,7 @@ public class InboxWorker(
                 try
                 {
                     await using var scope = scopeFactory.CreateAsyncScope();
-                    var handler = scope.ServiceProvider.GetRequiredService<ProcessCreateUserInboxMessageHandler>();
+                    var handler = scope.ServiceProvider.GetRequiredService<ProcessInboxMessageHandler>();
 
                     await handler.HandleAsync(eventId, stoppingToken);
                 }

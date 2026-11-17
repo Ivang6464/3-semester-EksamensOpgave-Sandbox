@@ -7,7 +7,7 @@ using VidensVejen.BuildingBlocksLib.Messaging.Outbox;
 using VidensVejen.BuildingBlocksLib.UnitOfWork;
 using VidensVejen.ContractsLib.Events;
 
-namespace UserService.ApplicationLib.Messaging.Inbox;
+namespace UserService.ApplicationLib.Messaging.Inbox.Handlers;
 
 /// <summary>
 /// 
@@ -16,7 +16,7 @@ namespace UserService.ApplicationLib.Messaging.Inbox;
 /// <param name="userRepo"></param>
 /// <param name="outbox"></param>
 /// <param name="unitOfWork"></param>
-public class ProcessCreateUserInboxMessageHandler(
+public class ProcessInboxMessageHandler(
     IInboxRepository inbox,
     IUserRepository userRepo,
     IOutboxRepository outbox,
