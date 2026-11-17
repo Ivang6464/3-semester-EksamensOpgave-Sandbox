@@ -27,7 +27,7 @@ public class CreateUserInboxStrategy(IUserRepository userRepo) : IInboxMessageSt
 
         var userCreatedIntegrationEvent = new UserActivateIntegrationEvent(
                 eventId,
-                "User-Activate",
+                "user-activate",
                 user.Id.Value
                 );
 
