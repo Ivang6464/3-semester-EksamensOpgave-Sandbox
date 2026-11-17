@@ -9,7 +9,7 @@ on:
 
 env:
   REGISTRY: ghcr.io
-  IMAGE_NAME: "vidensvejen-gameservice"
+  IMAGE_NAME: "vidensvejen-sandbox-gameservice"
   GITHUB_ACTOR: "hiha76740"
   DOCKER_IMAGE_CONTEXT: VidensVejen
 
