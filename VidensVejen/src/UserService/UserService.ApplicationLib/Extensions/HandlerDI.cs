@@ -20,7 +20,6 @@ public static class HandlerDI
     {
         services.AddScoped<IUpdateUserHandler, UpdateUserHandler>();
         services.AddScoped<IUpdateEmailHandler, UpdateEmailHandler>();
-        services.AddScoped<IDeleteUserHandler, DeleteUserHandler>();
         services.AddScoped<ProcessInboxMessageHandler>();
         services.AddScoped<PublishOutboxMessageHandler>();
 
